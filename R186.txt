@@ -1,0 +1,11 @@
+Yeild_to_maturity = 7.5
+Settlement_date = '26 August 2005'
+Bond = 'R186'
+Maturity_date = '21 December 2026'
+Coupon = 10.5
+Coupon_dates = ['21 June','21 Dec']
+BcDates = ['11 June','11 December']
+Redemption_amount = 100
+PROUND = 5
+Nominal = 1.5e6
+
