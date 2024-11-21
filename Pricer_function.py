@@ -161,7 +161,26 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
     d2AIPy = (dAIP*(F**3)/2 + d2AIP*(F**4)/4)/10000
     Conv = (10000/AIP)*d2AIPy
 
-    return AIP, CP, All_in_Consid, CleanConsid, raccrint, Delta, daysacc
+    data = {'AIP': AIP,
+            'CP' : CP,
+            'All_in_Consid': All_in_Consid,
+            'Clean_Consideration': CleanConsid,
+            'Accrued_Int_rounded': raccrint,
+            'Delta': Delta,
+            'DaysAcc': daysacc,
+            'Conv': Conv,
+            'Rounded_AIP': Rounded_AIP,
+            'Rounded_CP': Rounded_CP,
+            'Cumex': cumex,
+            'Duration': Dur,
+            'Modified_Duration': Dmod,
+            'Rand_per_Point':Rand_per_point,
+            'Number_of_Coupons': N,
+            'Last_CD' : last_cd,
+            'Next_CD': next_cd
+            }
+
+    return data
 
 
 # SA_Bond_pricer(Yeild=7.5, Settlement_Date='26 August 2005', Coupon= 10.5, 
@@ -171,6 +190,30 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
 #                )
 
 
-os.chdir('D:/MMRC_Labs/Pricer_Repo')
-current_directory = os.getcwd()
-print("Current Working Directory:", current_directory)
+# os.chdir('D:/MMRC_Labs/Pricer_Repo')
+# current_directory = os.getcwd()
+# print("Current Working Directory:", current_directory)
+
+# data = SA_Bond_pricer(Yeild=7.5, Settlement_Date='26 August 2005', Coupon= 10.5, 
+#                Maturity_Date='21 Dec 2026', Coupon_Dates= ['21 June','21 Dec'], 
+#                 Books_Closed_Dates= ['11 June','11 December'], Redemption_Amount= 100, Nominal= 1.5e6,
+#               Bond_name='R186')
+
+# print(data['AIP'])
+
+def convert_full_date(date_string):
+    import QuantLib as ql
+    from dateutil import parser
+    
+    temp_date = parser.parse(date_string)
+    temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
+    return temp_date
+
+def isBD_SA(Date):
+    #First convert the date
+    temp_date = convert_full_date(Date)
+    calendar = ql.SouthAfrica()
+    is_business_day = calendar.isBusinessDay(temp_date)*1
+    return is_business_day
+
+print(isBD_SA('25 Nov 2017')*1)
