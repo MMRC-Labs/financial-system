@@ -42,10 +42,12 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
     def LCD(Date,Coupon_date_1,Coupon_date_2):
         max_coupon_date = max(Coupon_date_1,Coupon_date_2)
         min_coupon_date = min(Coupon_date_1,Coupon_date_2)
-        if (date >= min_coupon_date):
-                return min_coupon_date   
-        else :
-            return max_coupon_date 
+        if (date.month() >= max_coupon_date.month()):
+                return max_coupon_date   
+        elif((date.month() < max_coupon_date.month()) & date.month() >= min_coupon_date.month()) :
+            return min_coupon_date
+        else: 
+            return calendar.advance(min_coupon_date,ql.Period(-6,ql.Months))
         
     #Calendar
     calendar = ql.SouthAfrica()
@@ -177,7 +179,9 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
             'Rand_per_Point':Rand_per_point,
             'Number_of_Coupons': N,
             'Last_CD' : last_cd,
-            'Next_CD': next_cd
+            'Next_CD': next_cd,
+            'CD_1': Coupon_date_1,
+            'CD_2': Coupon_date_2
             }
 
     return data
@@ -216,4 +220,12 @@ def isBD_SA(Date):
     is_business_day = calendar.isBusinessDay(temp_date)*1
     return is_business_day
 
-print(isBD_SA('25 Nov 2017')*1)
+# print(isBD_SA('25 Nov 2017')*1)
+
+# data1 = SA_Bond_pricer(Yeild=7.5, Settlement_Date='22 Nov 2017', Coupon= 8.875, 
+#                 Maturity_Date='28 Feb 2035', Coupon_Dates= ['28 Feb','31 Aug'], 
+#                 Books_Closed_Dates= ['18 Feb','21 Aug'], Redemption_Amount= 100, Nominal= 100,
+#                 Bond_name='R2035'
+#                 )
+
+# print("Last_CD: ",data1['Last_CD'] , "Next_CD: ", data1['Next_CD'],"Cumex=", data1['Cumex'], "AIP:", data1['AIP'])
