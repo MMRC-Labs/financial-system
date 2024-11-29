@@ -1,21 +1,25 @@
+#This function works just like the normal pricer, however this uses a bond object instead
+
 from dateutil import parser
 import datetime
 import QuantLib as ql
 import os
+from SA_Bond_Object import SA_Bond
 
-def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, Books_Closed_Dates, Coupon,Redemption_Amount, Nominal, PROUND =5):
+
+def SA_Bond_Object_pricer(Yeild,Settlement_Date,Bond_Object, PROUND =5):
     #Convert dates
 
     Yeild_to_maturity = Yeild
     Settlement_date = Settlement_Date
-    Bond = Bond_name
-    Maturity_date = Maturity_Date
-    Coupon = Coupon
-    Coupon_dates = Coupon_Dates
-    BcDates = Books_Closed_Dates
-    Redemption_amount = Redemption_Amount
+    Bond = Bond_Object.name
+    Maturity_date = Bond_Object.maturity_date
+    Coupon = Bond_Object.coupon
+    Coupon_dates = Bond_Object.coupon_dates
+    BcDates = Bond_Object.books_closed_dates
+    Redemption_amount = Bond_Object.redemption
     PROUND = PROUND
-    Nominal = Nominal
+    Nominal = Bond_Object.nominal
 
     #Maturity and settlement date
     dt = parser.parse(Settlement_date,)
@@ -191,45 +195,11 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
     return data
 
 
-# SA_Bond_pricer(Yeild=7.5, Settlement_Date='26 August 2005', Coupon= 10.5, 
-#                Maturity_Date='21 Dec 2026', Coupon_Dates= ['21 June','21 Dec'], 
-#                Books_Closed_Dates= ['11 June','11 December'], Redemption_Amount= 100, Nominal= 1.5e6,
-#                Bond_name='R186'
-#                )
+bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_dates=["21 June","21 Dec"], 
+                books_closed_dates=["11 June","11 Dec"],redemption=100, coupon=10.5, coupon_frequency=2)
 
 
-# os.chdir('D:/MMRC_Labs/Pricer_Repo')
-# current_directory = os.getcwd()
-# print("Current Working Directory:", current_directory)
+test = SA_Bond_Object_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_Object=bond1)
 
-# data = SA_Bond_pricer(Yeild=7.5, Settlement_Date='26 August 2005', Coupon= 10.5, 
-#                Maturity_Date='21 Dec 2026', Coupon_Dates= ['21 June','21 Dec'], 
-#                 Books_Closed_Dates= ['11 June','11 December'], Redemption_Amount= 100, Nominal= 1.5e6,
-#               Bond_name='R186')
+print(test['Rounded_AIP'])
 
-# print(data['AIP'])
-
-def convert_full_date(date_string):
-    import QuantLib as ql
-    from dateutil import parser
-    
-    temp_date = parser.parse(date_string)
-    temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
-    return temp_date
-
-def isBD_SA(Date):
-    #First convert the date
-    temp_date = convert_full_date(Date)
-    calendar = ql.SouthAfrica()
-    is_business_day = calendar.isBusinessDay(temp_date)*1
-    return is_business_day
-
-# print(isBD_SA('25 Nov 2017')*1)
-
-# data1 = SA_Bond_pricer(Yeild=7.5, Settlement_Date='22 Nov 2017', Coupon= 8.875, 
-#                 Maturity_Date='28 Feb 2035', Coupon_Dates= ['28 Feb','31 Aug'], 
-#                 Books_Closed_Dates= ['18 Feb','21 Aug'], Redemption_Amount= 100, Nominal= 100,
-#                 Bond_name='R2035'
-#                 )
-
-# print("Last_CD: ",data1['Last_CD'] , "Next_CD: ", data1['Next_CD'],"Cumex=", data1['Cumex'], "AIP:", data1['AIP'])
