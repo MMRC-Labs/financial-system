@@ -232,6 +232,18 @@ def isBD_SA(Date):
     is_business_day = calendar.isBusinessDay(temp_date)*1
     return is_business_day
 
+    #Last and next coupon dates:
+def LCD_SA(Settlement_Date,Coupon_date_1,Coupon_date_2):
+        calendar = ql.SouthAfrica()
+        max_coupon_date = max(Coupon_date_1,Coupon_date_2)
+        min_coupon_date = min(Coupon_date_1,Coupon_date_2)
+        if (Settlement_Date.month() >= max_coupon_date.month()):
+                return max_coupon_date   
+        elif((Settlement_Date.month() < max_coupon_date.month()) and (Settlement_Date.month() >= min_coupon_date.month())) :
+            return min_coupon_date
+        else: 
+            return calendar.advance(min_coupon_date,ql.Period(-6,ql.Months))
+
 # print(isBD_SA('25 Nov 2017')*1)
 
 # data1 = SA_Bond_pricer(Yeild=7.5, Settlement_Date='22 Nov 2017', Coupon= 8.875, 
