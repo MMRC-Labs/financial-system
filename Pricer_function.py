@@ -44,7 +44,7 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
         min_coupon_date = min(Coupon_date_1,Coupon_date_2)
         if (date.month() >= max_coupon_date.month()):
                 return max_coupon_date   
-        elif((date.month() < max_coupon_date.month()) & date.month() >= min_coupon_date.month()) :
+        elif((date.month() < max_coupon_date.month()) and (date.month() >= min_coupon_date.month())) :
             return min_coupon_date
         else: 
             return calendar.advance(min_coupon_date,ql.Period(-6,ql.Months))
@@ -191,7 +191,9 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
             'D2AIP': d2AIP,
             'D2R': d2R,
             'D2CPN':d2CPN,
-            'DAIP':dAIP
+            'DAIP':dAIP,
+            'Remaining_Coupons':N,
+            'Date': date
             }
 
     return data

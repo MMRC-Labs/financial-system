@@ -48,7 +48,7 @@ def SA_Bond_Object_pricer(Yeild,Settlement_Date,Bond_Object, PROUND =5):
         min_coupon_date = min(Coupon_date_1,Coupon_date_2)
         if (date.month() >= max_coupon_date.month()):
                 return max_coupon_date   
-        elif((date.month() < max_coupon_date.month()) & date.month() >= min_coupon_date.month()) :
+        elif((date.month() < max_coupon_date.month()) and (date.month() >= min_coupon_date.month())) :
             return min_coupon_date
         else: 
             return calendar.advance(min_coupon_date,ql.Period(-6,ql.Months))
@@ -189,7 +189,15 @@ def SA_Bond_Object_pricer(Yeild,Settlement_Date,Bond_Object, PROUND =5):
             'BCD_1':BCD_1,
             'BCD_2': BCD_2,
             'Broken_Period': BP,
-            'Broken_Period_Factor': BPF
+            'Broken_Period_Factor': BPF,
+            'F':F,
+            'Accrued_Int':accrint,
+            'D2AIP': d2AIP,
+            'D2R': d2R,
+            'D2CPN':d2CPN,
+            'DAIP':dAIP,
+            'Remaining_Coupons':N,
+            'Date': date
             }
 
     return data
@@ -201,5 +209,5 @@ bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_date
 
 test = SA_Bond_Object_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_Object=bond1)
 
-print(test['Duration'])
+print(test['AIP'])
 

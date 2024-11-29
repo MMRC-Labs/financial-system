@@ -66,7 +66,43 @@ class testBondPricer(unittest.TestCase):
                            0.380434783,
                            places=9
                            )
-        
+    def test_Broken_Period_Factor(self):     #This being correct means that the intermediate results are also correct
+        self.assertAlmostEqual(
+            SA_Bond_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_name='R2040', Coupon=9.0,
+                           Maturity_Date='31 Jan 2040', Coupon_Dates=['31 July','31 Jan'],
+                           Books_Closed_Dates=['21 Jan','21 July'],Redemption_Amount=100,
+                           Nominal=100,PROUND=5)['Broken_Period_Factor'],
+                           0.985189842,
+                           places=9
+                           )
+    def test_Convexity(self):     #This being correct means that the intermediate results are also correct
+        self.assertAlmostEqual(
+            SA_Bond_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_name='R2040', Coupon=9.0,
+                           Maturity_Date='31 Jan 2040', Coupon_Dates=['31 July','31 Jan'],
+                           Books_Closed_Dates=['21 Jan','21 July'],Redemption_Amount=100,
+                           Nominal=100,PROUND=5)['Conv'],
+                           116.450873480,
+                           places=9
+                           )
+    def test_Rand_Per_Point(self):     #This being correct means that the intermediate results are also correct
+        self.assertAlmostEqual(
+            SA_Bond_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_name='R2040', Coupon=9.0,
+                           Maturity_Date='31 Jan 2040', Coupon_Dates=['31 July','31 Jan'],
+                           Books_Closed_Dates=['21 Jan','21 July'],Redemption_Amount=100,
+                           Nominal=100,PROUND=5)['Rand_per_Point'],
+                           -987.727683728,
+                           places=9
+                           )
+    def test_F(self):     #This being correct means that the intermediate results are also correct
+        self.assertAlmostEqual(
+            SA_Bond_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_name='R2040', Coupon=9.0,
+                           Maturity_Date='31 Jan 2040', Coupon_Dates=['31 July','31 Jan'],
+                           Books_Closed_Dates=['21 Jan','21 July'],Redemption_Amount=100,
+                           Nominal=100,PROUND=5)['F'],
+                           0.961538462,
+                           places=9
+                           )
+    
 
 if __name__ =='__main__':
         unittest.main()
