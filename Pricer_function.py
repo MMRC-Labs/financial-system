@@ -185,7 +185,13 @@ def SA_Bond_pricer(Yeild,Settlement_Date,Bond_name,Maturity_Date,Coupon_Dates, B
             'BCD_1':BCD_1,
             'BCD_2': BCD_2,
             'Broken_Period': BP,
-            'Broken_Period_Factor': BPF
+            'Broken_Period_Factor': BPF,
+            'F':F,
+            'Accrued_Int':accrint,
+            'D2AIP': d2AIP,
+            'D2R': d2R,
+            'D2CPN':d2CPN,
+            'DAIP':dAIP
             }
 
     return data

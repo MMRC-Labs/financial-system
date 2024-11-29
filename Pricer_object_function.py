@@ -201,5 +201,5 @@ bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_date
 
 test = SA_Bond_Object_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_Object=bond1)
 
-print(test['Rounded_AIP'])
+print(test['Duration'])
 

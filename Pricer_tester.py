@@ -57,6 +57,15 @@ class testBondPricer(unittest.TestCase):
                            9.169988485,
                            places=9
                            )
+    def test_Broken_Period(self):     #This being correct means that the intermediate results are also correct
+        self.assertAlmostEqual(
+            SA_Bond_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_name='R2040', Coupon=9.0,
+                           Maturity_Date='31 Jan 2040', Coupon_Dates=['31 July','31 Jan'],
+                           Books_Closed_Dates=['21 Jan','21 July'],Redemption_Amount=100,
+                           Nominal=100,PROUND=5)['Broken_Period'],
+                           0.380434783,
+                           places=9
+                           )
         
 
 if __name__ =='__main__':
