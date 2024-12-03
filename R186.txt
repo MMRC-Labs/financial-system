@@ -1,3 +1,5 @@
+Bond details for testing
+
 Yeild_to_maturity = 7.5
 Settlement_date = '26 August 2005'
 Bond = 'R186'
@@ -8,4 +10,6 @@ BcDates = ['11 June','11 December']
 Redemption_amount = 100
 PROUND = 5
 Nominal = 1.5e6
+
+
 
