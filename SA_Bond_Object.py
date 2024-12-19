@@ -3,7 +3,7 @@ class SA_Bond:
          self.name = name
          self.redemption = redemption
          self.nominal = nominal
-         self.coupon = coupon
+         self.coupon = coupon 
          self.maturity_date = maturity_date
          self.coupon_dates = coupon_dates
          self.books_closed_dates = books_closed_dates

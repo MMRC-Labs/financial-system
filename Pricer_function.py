@@ -225,6 +225,7 @@ def convert_full_date(date_string):
     temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
     return temp_date
 
+
 def isBD_SA(Date):
     #First convert the date
     temp_date = convert_full_date(Date)

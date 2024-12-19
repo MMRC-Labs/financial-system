@@ -85,7 +85,7 @@ def SA_Bond_Object_pricer(Yeild,Settlement_Date,Bond_Object, PROUND =5):
 
     #Intermediary results
 
-    #Semi +- annual discount factor
+    #Semi - annual discount factor
     F = 1/(1+Yeild_to_maturity/200)
 
     #Broken period
