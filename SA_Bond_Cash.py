@@ -14,6 +14,21 @@ def convert_date(date_string, Year):
     temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
     return temp_date
 
+def generate_coupon_dates(Next_Coupon_Date,Bond_Object):
+    calendar = ql.SouthAfrica()
+    coupon_dates = []
+    current_date = Next_Coupon_Date
+    
+    while current_date < Bond_Object.maturity_date:
+        coupon_dates.append(current_date)
+        current_date = calendar.advance(current_date,ql.Period(6,ql.Months))
+        
+    if current_date == Bond_Object.maturity_date: 
+        coupon_dates.append(Bond_Object.maturity_date)
+    
+    return coupon_dates
+
+
 def project_cash(Date, Bond_Object):
     Settlement_Date = convert_full_date(Date) #Probably unnecessary, but ensures date is date
 
@@ -46,6 +61,12 @@ def project_cash(Date, Bond_Object):
 
     #Coupon payable on NCD
     cpn_at_ncd = CPN*cumex
+
+
+
+
+
+
 
     
 
