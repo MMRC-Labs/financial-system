@@ -3,7 +3,7 @@
 #This function takes an SA bond object and then projects and projects cashflows
 
 from SA_Bond_Object import SA_Bond
-from Pricer_object_function import convert_full_date, LCD_SA
+from Pricer_function import convert_full_date,LCD_SA
 import QuantLib as ql
 
 def convert_date(date_string, Year):
@@ -17,9 +17,10 @@ def convert_date(date_string, Year):
 def generate_coupon_dates(Next_Coupon_Date,Bond_Object):
     calendar = ql.SouthAfrica()
     coupon_dates = []
-    current_date = Next_Coupon_Date
+    current_date = convert_full_date(Next_Coupon_Date)
+    Mat_date = convert_full_date(Bond_Object.maturity_date)
     
-    while current_date < Bond_Object.maturity_date:
+    while current_date <= Mat_date:
         coupon_dates.append(current_date)
         current_date = calendar.advance(current_date,ql.Period(6,ql.Months))
         
@@ -61,6 +62,18 @@ def project_cash(Date, Bond_Object):
 
     #Coupon payable on NCD
     cpn_at_ncd = CPN*cumex
+
+    #Coupon dates from coupon generator:
+    coupon_dates = generate_coupon_dates(next_cd,Bond_Object=Bond_Object)
+
+    return coupon_dates
+
+bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_dates=["21 June","21 Dec"], 
+                books_closed_dates=["11 June","11 Dec"],redemption=100, coupon=10.5, coupon_frequency=2)
+
+test = generate_coupon_dates(Next_Coupon_Date="21 June 2024",Bond_Object=bond1)
+
+print(test)
 
 
 
