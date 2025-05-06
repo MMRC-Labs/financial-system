@@ -1,0 +1,53 @@
+from dateutil import parser
+from Pricer_object_function import SA_Bond_Object_pricer
+from SA_Bond_Object import SA_Bond
+import QuantLib as ql, numpy as np
+
+def convert_date(date_string, Year):
+    import QuantLib as ql
+    from dateutil import parser
+        
+    temp_date = parser.parse(date_string + " " + str(Year),)
+    temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
+    return temp_date
+
+def isBD_SA(Date):
+    #First convert the date
+    temp_date = convert_full_date(Date)
+    calendar = ql.SouthAfrica()
+    is_business_day = calendar.isBusinessDay(temp_date)*1
+    return is_business_day
+
+def convert_full_date(date_string):
+    import QuantLib as ql
+    from dateutil import parser
+    
+    temp_date = parser.parse(date_string)
+    temp_date = ql.Date(temp_date.day,temp_date.month,temp_date.year)
+    return temp_date
+
+Settlement_Date = convert_full_date("21 June 2024")
+test_date = convert_date("21 Jan", Settlement_Date.year())
+full_date = convert_full_date("31 Jan 2040")
+        
+temp_date = parser.parse("21 Jun" + str(2024),)
+
+bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_dates=["21 June","21 Dec"], 
+                books_closed_dates=["11 June","11 Dec"],redemption=100, coupon=10.5, coupon_frequency=2)
+bond2 = SA_Bond(name="R2040",nominal=100, maturity_date="31 Jan 2040",coupon_dates=["31 Jan","31 July"], 
+                books_closed_dates=["21 July","21 Jan"],redemption=100, coupon=9.0, coupon_frequency=2)
+bond3 = SA_Bond(name="R2030",nominal=100, maturity_date="31 Jan 2030",coupon_dates=["31 Jan","31 July"], 
+                books_closed_dates=["21 July","21 Jan"],redemption=100, coupon=8.0, coupon_frequency=2)
+
+
+test_price = SA_Bond_Object_pricer(Yeild=10,Settlement_Date='31 Jan 2024',Bond_Object=bond2)
+remaining_coupons = test_price['Remaining_Coupons']
+
+#print(test_date.month())
+#print(Settlement_Date.year())
+#print(test_date.month(),full_date.month(), type(full_date), type(test_date))
+#print(isBD_SA("31 Dec 2026"))
+
+#print(test_price['Remaining_Coupons'], np.full(1,remaining_coupons))
+
+print(test_price['Number_of_Coupons'])

@@ -207,7 +207,7 @@ bond1 = SA_Bond(name="R186",nominal=100, maturity_date="21 Dec 2026",coupon_date
                 books_closed_dates=["11 June","11 Dec"],redemption=100, coupon=10.5, coupon_frequency=2)
 
 
-test = SA_Bond_Object_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_Object=bond1)
+#test = SA_Bond_Object_pricer(Yeild=8,Settlement_Date='22 Nov 2022',Bond_Object=bond1)
 
-print(test['AIP'])
+#print(test['AIP'])
 
